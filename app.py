@@ -10,7 +10,18 @@ def index():
 @app.route("/prediction",methods=["GET","POST"])
 def prediction():
     q = float(request.form.get("q"))
-    return(render_template("prediction.html",r=(-50.6*q)+90.2))
+
+@app.route("/prediction",methods=["GET","POST"])
+def prediction():
+    q = float(request.form.get("q"))
+
+    # load model
+    model = joblib.load("dbs.jl")
+
+    # make prediction
+    pred = model.predict([[q]])
+
+    return(render_template("prediction.html",r=pred)
 
 if __name__ == "__main__":
     app.run()
